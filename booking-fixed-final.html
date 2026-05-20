@@ -1,0 +1,109 @@
+
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Booking Fixed Final</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/confirmDate/confirmDate.css">
+
+<style>
+*{box-sizing:border-box;font-family:Poppins,sans-serif}
+body{margin:0;background:#111;color:#fff}
+header{padding:25px 8%;display:flex;justify-content:space-between;align-items:center;background:#111;border-bottom:1px solid #222}
+nav a{text-decoration:none;color:#fff;margin-left:20px}
+.cta{background:#ffb400;color:#000;padding:10px 16px;border-radius:20px}
+.hero{padding:70px 8%;background:#181818}
+.container{padding:40px 8%}
+.card,.car{background:#1c1c1c;padding:25px;border-radius:20px}
+#map{height:350px;border-radius:15px;margin:15px 0}
+.row,.cars{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+input{width:100%;padding:14px;background:#222;color:#fff;border:1px solid #333;border-radius:12px}
+.btn{background:#ffb400;border:0;padding:12px 18px;border-radius:18px;font-weight:bold;cursor:pointer}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;padding:30px}
+footer{padding:30px;text-align:center;background:#000;margin-top:40px;color:#aaa}
+</style>
+</head>
+<body>
+
+<header>
+<b><a href="index.html" style="color:white;text-decoration:none">RENT A CAR GALAȚI</a></b>
+<nav>
+<a href="index.html">Acasă</a>
+<a href="#">Flotă</a>
+<a href="#">Despre</a>
+<a href="#">Contact</a>
+<a class="cta" href="#">Rezervă acum</a>
+</nav>
+</header>
+
+<div class="hero"><h1>Rezervare mașină</h1></div>
+
+<div class="container">
+<div class="card">
+<input id="address" placeholder="Adresă preluare Galați">
+<div id="map"></div>
+
+<div class="row">
+<input id="pickup" placeholder="Preluare">
+<input id="dropoff" placeholder="Predare">
+</div>
+
+<br>
+<label><input type="checkbox" id="license" style="width:auto"> Am permis minim 1 an</label>
+<br><br>
+<button class="btn" onclick="openModal()">Alege mașina</button>
+</div>
+</div>
+
+<div class="modal" id="modal">
+<button class="btn" onclick="closeModal()">Închide</button>
+<h2>Mașini disponibile</h2>
+<div class="cars">
+<div class="car"><h3>Mercedes C Class</h3><p>45€/zi</p></div>
+<div class="car"><h3>BMW Seria 3</h3><p>50€/zi</p></div>
+</div>
+</div>
+
+<footer>Rent a Car Galați © 2026</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/confirmDate/confirmDate.js"></script>
+
+<script>
+flatpickr("#pickup",{enableTime:true,time_24hr:true,dateFormat:"d.m.Y H:i",
+plugins:[new confirmDatePlugin({confirmText:"Confirmă"})]});
+
+flatpickr("#dropoff",{enableTime:true,time_24hr:true,dateFormat:"d.m.Y H:i",
+plugins:[new confirmDatePlugin({confirmText:"Confirmă"})]});
+
+let map=L.map('map').setView([45.4353,28.0079],13);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+let marker=L.marker([45.4353,28.0079]).addTo(map);
+
+map.on('click',e=>{
+marker.setLatLng(e.latlng);
+address.value=e.latlng.lat.toFixed(5)+", "+e.latlng.lng.toFixed(5);
+});
+
+function openModal(){
+if(!pickup.value||!dropoff.value||!license.checked){
+alert("Completează toate câmpurile");
+return;
+}
+modal.style.display="block";
+}
+
+function closeModal(){
+modal.style.display="none";
+}
+</script>
+
+</body>
+</html>
