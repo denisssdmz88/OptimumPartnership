@@ -5,146 +5,259 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termeni și Condiții - OPTIMUM PARTNERSHIP</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css"> 
     <style>
-        /* Stiluri specifice pentru pagina de termeni, aliniate la designul site-ului auto */
-        .terms-section {
-            padding: 60px 0;
-            background-color: var(--bg-light, #f8f9fa);
+        /* Paleta de culori extrasă din designul site-ului tău */
+        :root {
+            --bg-main: #121212;         /* Negru/Dark din fundal */
+            --bg-card: #1e1e1e;         /* Culoarea containerelor/formularelor */
+            --accent-color: #ffb703;    /* Galbenul intens de pe butoane */
+            --text-main: #ffffff;       /* Textul alb principal */
+            --text-muted: #aaaaaa;      /* Textul secundar / gri */
+            --border-color: #333333;
         }
 
-        .terms-wrapper {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Header / Navbar exact ca în imagine */
+        .site-header {
+            background-color: rgba(18, 18, 18, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-nav {
+            background-color: var(--accent-color);
+            color: #000000 !important;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600 !important;
+        }
+
+        /* Zona centrală de conținut */
+        .terms-container {
             max-width: 900px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin: 60px auto;
+            padding: 0 20px;
         }
 
-        .terms-wrapper h1 {
-            color: var(--primary-color, #111111);
-            font-size: 2.5rem;
+        .terms-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--text-main);
             margin-bottom: 10px;
             font-weight: 700;
+            text-align: center;
         }
 
-        .terms-meta {
-            color: #777777;
+        .meta-date {
+            color: var(--accent-color);
             font-size: 0.9rem;
+            text-align: center;
             margin-bottom: 30px;
-            border-bottom: 2px solid var(--accent-color, #ffcc00); /* Culoarea de accent a site-ului tău (ex: galben/portocaliu) */
-            padding-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .company-badge {
-            background-color: #f1f3f5;
-            border-left: 4px solid var(--accent-color, #ffcc00);
+        /* Caseta cu datele fiscale (stilată similar câmpurilor din booking) */
+        .company-box {
+            background-color: rgba(255, 183, 3, 0.05);
+            border: 1px dashed var(--accent-color);
+            border-radius: 8px;
             padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 0 4px 4px 0;
+            margin-bottom: 35px;
         }
 
-        .company-badge p {
-            margin: 5px 0;
+        .company-box p {
+            margin-bottom: 8px;
             font-size: 0.95rem;
         }
 
-        .terms-content h2 {
-            color: var(--primary-color, #111111);
-            font-size: 1.4rem;
+        .company-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .company-box strong {
+            color: var(--accent-color);
+        }
+
+        /* Secțiunile de text legal */
+        h2 {
+            color: var(--accent-color);
+            font-size: 1.3rem;
             margin-top: 30px;
             margin-bottom: 15px;
             font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
         }
 
-        .terms-content p, .terms-content li {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: #444444;
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
             text-align: justify;
+            font-size: 0.95rem;
         }
 
-        .terms-content ul {
-            padding-left: 20px;
+        ul {
             margin-bottom: 20px;
+            padding-left: 20px;
         }
 
-        .terms-content li {
+        li {
+            color: var(--text-muted);
             margin-bottom: 8px;
+            font-size: 0.95rem;
         }
 
-        /* Buton de întoarcere stilat ca butoanele din restul site-ului */
+        /* Butonul de acțiune principal din josul paginii */
+        .btn-action-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
         .btn-back {
             display: inline-block;
-            background-color: var(--primary-color, #111111);
-            color: #ffffff;
-            padding: 12px 25px;
-            border-radius: 4px;
+            background-color: var(--accent-color);
+            color: #000000;
+            padding: 14px 40px;
+            border-radius: 25px;
             text-decoration: none;
             font-weight: 600;
-            margin-top: 40px;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            transition: transform 0.2s ease, background-color 0.3s ease;
         }
 
         .btn-back:hover {
-            background-color: var(--accent-color, #ffcc00);
-            color: #111111;
+            transform: scale(1.02);
+            background-color: #e5a100;
         }
 
+        /* Responsivitate pentru mobil */
         @media (max-width: 768px) {
-            .terms-wrapper {
-                padding: 20px;
-                margin: 0 15px;
+            .site-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
             }
-            .terms-wrapper h1 {
-                font-size: 1.8rem;
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .terms-card {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.7rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        </header>
+    <header class="site-header">
+        <div class="logo">OPTIMUM <span>PARTNERSHIP</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Acasă</a></li>
+            <li><a href="flota.html">Flotă</a></li>
+            <li><a href="despre.html">Despre</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="booking.html" class="btn-nav">Rezervă acum</a></li>
+        </ul>
+    </header>
 
-    <section class="terms-section">
-        <div class="terms-wrapper">
+    <div class="terms-container">
+        <div class="terms-card">
             <h1>Termeni și Condiții</h1>
-            <div class="terms-meta">Ultima actualizare: Mai, 2026</div>
+            <div class="meta-date">Ultima actualizare: 22.05.2026</div>
 
-            <div class="company-badge">
+            <div class="company-box">
                 <p><strong>Operator platformă:</strong> OPTIMUM PARTNERSHIP S.R.L.</p>
-                <p><strong>Cod Unic de Înregistrare:</strong> RO43601888</p>
-                <p><strong>Reg. Comerțului:</strong> J2021000125175</p>
+                <p><strong>Cod Unic de Înregistrare (CUI):</strong> RO43601888</p>
+                <p><strong>Număr Reg. Comerțului:</strong> J2021000125175</p>
                 <p><strong>Sediu Social:</strong> Str. Navelor nr. 2, Galați, România</p>
             </div>
 
-            <div class="terms-content">
-                <p>Prezentul document stabilește termenii și condițiile în care puteți utiliza site-ul web de închirieri auto și serviciile puse la dispoziție de către <strong>OPTIMUM PARTNERSHIP S.R.L.</strong>. Utilizarea site-ului, navigarea pe paginile acestuia sau efectuarea unei rezervări implică acceptarea deplină a acestor termeni.</p>
+            <p>Prezentul document reglementează termenii și condițiile de utilizare a platformei web de rezervări auto aparținând societății noastre. Navigarea pe site sau finalizarea unei cereri de rezervare implică acceptarea totală a clauzelor de mai jos.</p>
 
-                <h2>1. Condiții Generale de Închiriere</h2>
-                <p>Pentru a efectua o rezervare validă prin intermediul platformei noastre, utilizatorul trebuie să îndeplinească condițiile legale de vârstă și deținere a unui permis de conducere valid (specificat în contractul final de închiriere). Datele introduse în formularul de booking trebuie să fie reale și corecte.</p>
+            <h2>1. Condiții și Criterii de Închiriere</h2>
+            <p>Pentru a închiria un autoturism din flota noastră, utilizatorul/șoferul trebuie să îndeplinească următoarele criterii obligatorii în momentul semnării contractului fizic:</p>
+            <ul>
+                <li>Să dețină un permis de conducere valid, cu o vechime de minimum 1 an.</li>
+                <li>Să prezinte un act de identitate sau pașaport valabil.</li>
+                <li>Vârsta minimă acceptată este de 21 de ani (pentru anumite clase de vehicule pot exista criterii specifice).</li>
+            </ul>
 
-                <h2>2. Proprietatea Intelectuală</h2>
-                <p>Întregul conținut al acestui site (texte, imagini cu mașinile din flotă, elemente grafice, logo-uri și structura bazei de date) este proprietatea exclusivă a OPTIMUM PARTNERSHIP S.R.L. și este protejat de legea drepturilor de autor. Copierea sau utilizarea neautorizată a acestora este strict interzisă.</p>
+            <h2>2. Procesul de Rezervare (Booking)</h2>
+            <p>Toate rezervările efectuate prin intermediul site-ului reprezintă intenții de rezervare și sunt validate doar după confirmarea telefonică sau prin e-mail de către un operator OPTIMUM PARTNERSHIP. Prețurile afișate (de exemplu, tariful de 40€/zi pentru Skoda Rapid) pot varia în funcție de perioada aleasă, durata închirierii și serviciile suplimentare selectate.</p>
 
-                <h2>3. Utilizarea Formularului de Rezervare (Booking)</h2>
-                <p>Prin trimiterea unei cereri de rezervare, utilizatorul este de acord să fie contactat pentru confirmarea disponibilității autoturismului ales și finalizarea detaliilor comerciale. Compania își rezervă dreptul de a refuza anumite rezervări în funcție de indisponibilitatea flotei sau neîndeplinirea criteriilor interne de siguranță.</p>
+            <h2>3. Proprietate Intelectuală</h2>
+            <p>Grafica site-ului, imaginile autoturismelor, textele și elementele de branding sunt proprietatea exclusivă a OPTIMUM PARTNERSHIP S.R.L. Utilizarea, copierea sau republicarea acestora fără acord scris prealabil constituie o încălcare a drepturilor de autor.</p>
 
-                <h2>4. Prelucrarea Datelor (GDPR)</h2>
-                <p>Datele colectate prin intermediul formularului de rezervare sunt prelucrate în scopul exclusiv de a genera ofertele și contractele de închiriere auto, în deplină conformitate cu Regulamentul European GDPR. Informațiile nu vor fi înstrăinate către terți.</p>
+            <h2>4. Limitarea Răspunderii</h2>
+            <p>Societatea depune toate eforturile pentru menținerea site-ului securizat și complet funcțional. Cu toate acestea, nu ne asumăm răspunderea pentru erori tehnice temporare ale serverului sau pentru imposibilitatea de trimitere a formularelor din motive independente de rețeaua noastră.</p>
 
-                <h2>5. Litigii și Legea Aplicabilă</h2>
-                <p>Orice dispută născută în legătură cu utilizarea acestui site va fi soluționată pe cale amiabilă. În caz contrar, competența revine instanțelor de judecată din raza sediului social al societății (Galați).</p>
+            <h2>5. Politica GDPR și Confidențialitate</h2>
+            <p>Datele transmise prin formularele de pe site (nume, telefon, e-mail, detalii permis) sunt folosite exclusiv pentru întocmirea documentelor preliminare de închiriere auto și sunt prelucrate în condiții de maximă siguranță, conform legislației europene în vigoare.</p>
+
+            <div class="btn-action-container">
+                <a href="booking.html" class="btn-back">Înapoi la Rezervare</a>
             </div>
-
-            <a href="booking.html" class="btn-back">Înapoi la Rezervare</a>
         </div>
-    </section>
-
-    <footer>
-        </footer>
+    </div>
 
 </body>
 </html>
