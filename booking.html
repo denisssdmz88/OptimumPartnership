@@ -824,8 +824,29 @@ const fpConfig = {
     }
 };
 
-const pickupPicker = flatpickr("#pickup", fpConfig);
-const dropoffPicker = flatpickr("#dropoff", fpConfig);
+const pickupPicker = flatpickr("#data_pickup", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    time_24hr: true,
+    minDate: "today", // Blochează zilele din trecut (ex: tot ce e înainte de azi)
+    locale: "ro",
+    onChange: function(selectedDates, dateStr, instance) {
+        // Când alegi data de pickup, data de dropoff nu poate fi înaintea ei
+        dropoffPicker.set("minDate", dateStr);
+        calculeazaTotal(); // sau cum se numește funcția ta de calcul
+    }
+});
+
+const dropoffPicker = flatpickr("#data_dropoff", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    time_24hr: true,
+    minDate: "today", // Implicit nu lasă zile din trecut
+    locale: "ro",
+    onChange: function() {
+        calculeazaTotal();
+    }
+});
 
 let map = L.map('map', {
     center: [45.4340, 28.0560],
