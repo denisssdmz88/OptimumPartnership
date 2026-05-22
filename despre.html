@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Despre Noi - Optimum Partnership | Închirieri Auto Galați</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background: #111;
+    color: #fff;
+}
+
+header{
+    position: fixed;
+    width: 100%;
+    padding: 25px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.logo{
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.logo span {
+    color: #ffb400;
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a{
+    text-decoration: none;
+    color: white;
+    margin-left: 25px;
+    transition: .3s;
+}
+
+nav a:hover, nav a.active{
+    color: #ffb400;
+}
+
+.cta-btn{
+    padding: 12px 24px;
+    background: #ffb400;
+    border-radius: 30px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    transition: .3s;
+    text-align: center;
+}
+
+.cta-btn:hover {
+    background: #e09e00;
+}
+
+.cta-btn.secondary {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+}
+
+.cta-btn.secondary:hover {
+    background: white;
+    color: black;
+}
+
+.hero{
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 8% 0 8%;
+    background: linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.85)), url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=2000');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.hero h1{
+    font-size: 48px;
+}
+
+.container{
+    padding: 60px 8%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.about-text {
+    background: #1c1c1c;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid #222;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    line-height: 1.8;
+}
+
+.about-text h2 {
+    color: #ffb400;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.about-text a.inline-link {
+    color: #ffb400;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dashed #ffb400;
+    transition: 0.3s;
+}
+
+.about-text a.inline-link:hover {
+    color: white;
+    border-bottom-color: white;
+}
+
+.action-links {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* --- DESIGN SLIDER --- */
+.slider-section {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.slider-section h3 {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.slider-section h3 span {
+    color: #ffb400;
+}
+
+.slider-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 15px;
+    border: 2px solid #222;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    position: relative;
+    height: 450px;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    padding: 30px 20px 20px 20px;
+    text-align: center;
+}
+
+.slide-caption h4 {
+    font-size: 22px;
+    color: #ffb400;
+    margin-bottom: 5px;
+}
+
+.slide-caption p {
+    font-size: 14px;
+    color: #ddd;
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: 1px solid #333;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.slider-btn:hover {
+    background: #ffb400;
+    color: black;
+    border-color: #ffb400;
+}
+
+.slider-btn.prev { left: 15px; }
+.slider-btn.next { right: 15px; }
+
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #333;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background: #ffb400;
+    transform: scale(1.2);
+}
+
+footer{
+    padding:60px 8% 40px 8%;
+    background:black;
+    color:#aaa;
+    font-size:14px;
+    border-top:1px solid #111;
+    margin-top: 60px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    text-align: left;
+    max-width: 1400px;
+    margin: 0 auto 40px auto;
+}
+
+.footer-section h4 {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.footer-section p {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.footer-section a {
+    color: #ffb400;
+    text-decoration: none;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid #222;
+    color: #666;
+}
+
+@media(max-width:768px){
+    .hero h1{
+        font-size: 36px;
+    }
+    nav{
+        display: none;
+    }
+    .about-text {
+        padding: 25px;
+    }
+    .slide {
+        height: 300px;
+    }
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo"><a href="index.html">OPTIMUM <span>PARTNERSHIP</span></a></div>
+<nav>
+<a href="index.html">Acasă</a>
+<a href="flota.html">Flotă</a>
+<a href="despre.html" class="active">Despre</a>
+<a href="contact.html">Contact</a>
+<a class="cta-btn" href="booking.html">Rezervă acum</a>
+</nav>
+</header>
+
+<section class="hero">
+    <h1>Despre Noi</h1>
+</section>
+
+<div class="container">
+    <div class="about-grid">
+        <div class="about-text">
+            <h2>Cine suntem?</h2>
+            <p>La <strong>Optimum Partnership</strong>, redefinim experiența serviciilor de închirieri auto în Galați. Ne ghidăm după principii simple, dar esențiale: flexibilitate maximă, transparență totală a costurilor și autoturisme sigure, gata oricând de drum.</p>
+            
+            <p>Fie că ai nevoie de un autoturism compact și economic pentru deplasări urbane rapide, fie că ai o afacere și cauți o utilitară frigorifică profesională pentru transport specializat, noi avem soluția potrivită. Poți explora întreaga noastră <a href="flota.html" class="inline-link">flotă auto disponibilă</a> pentru a alege modelul optim.</p>
+            
+            <p>Suntem flexibili în privința profilelor de clienți, oferind asistență personalizată atât pentru Persoane Fizice, cât și pentru Persoane Juridice. Procesul nostru este complet digitalizat și rapid: îți poți asigura mașina direct din pagina de <a href="booking.html" class="inline-link">rezervări online</a>, urmând ca preluarea să se facă rapid direct de la sediul nostru central din Galați.</p>
+            
+            <p>Ai întrebări specifice sau o solicitare atipică? Echipa noastră îți stă cu drag la dispoziție. Ne poți lăsa un mesaj sau ne poți apela direct utilizând datele din pagina de <a href="contact.html" class="inline-link">contact</a>.</p>
+            
+            <div class="action-links">
+                <a href="booking.html" class="cta-btn">Rezervă o mașină</a>
+                <a href="flota.html" class="cta-btn secondary">Vezi Flota</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-section">
+        <h3>Mașinile <span>Noastre</span></h3>
+        
+        <div class="slider-container">
+            <button class="slider-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="slider-btn next" onclick="moveSlide(1)">&#10095;</button>
+            
+            <div class="slider" id="slider">
+                <div class="slide">
+                    <img src="peugeot.png" alt="Peugeot 308">
+                    <div class="slide-caption">
+                        <h4>Peugeot 308</h4>
+                        <p>🕹️ Manuală (6+1) | ⛽ 1.6 HDI — Stil, confort și consum minim.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="skoda_fata.png" alt="Skoda Rapid">
+                    <div class="slide-caption">
+                        <h4>Skoda Rapid</h4>
+                        <p>🕹️ Manuală (5+1) | ⛽ 1.6 TDI — Spațioasă, fiabilă și ideală pentru călătorii lungi.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="opel_fata.png" alt="Opel Astra">
+                    <div class="slide-caption">
+                        <h4>Opel Astra</h4>
+                        <p>🕹️ Manuală (6+1) | ⛽ 1.5 CDTI — Dinamică și perfect adaptată drumurilor moderne.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="ford.png" alt="Ford Transit Frigorific">
+                    <div class="slide-caption">
+                        <h4>Ford Transit Frigorific</h4>
+                        <p>🕹️ Manuală | ❄️ Agregat Frigo — Soluția profesională pentru afacerea ta.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slider-dots">
+            <div class="dot active" onclick="currentSlide(0)"></div>
+            <div class="dot" onclick="currentSlide(1)"></div>
+            <div class="dot" onclick="currentSlide(2)"></div>
+            <div class="dot" onclick="currentSlide(3)"></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+<div class="footer-content">
+<div class="footer-section">
+<h4>Optimum Partnership</h4>
+<p>Servicii premium de închirieri auto în Galați. Flexibilitate, corectitudine și mașini adaptate nevoilor tale.</p>
+</div>
+<div class="footer-section">
+<h4>Informații Legale</h4>
+<p><b>CUI:</b> RO43601888</p>
+<p><b>Reg. Com:</b> J2021000125175</p>
+<p><b>Sediu:</b> Str. Navelor nr. 2, Galați</p>
+</div>
+<div class="footer-section">
+<h4>Contact Direct</h4>
+<p><b>Telefon:</b> <a href="tel:+40744700230">0744 700 230</a></p>
+<p><b>Email:</b> <a href="mailto:optimumhoreca@yahoo.com">optimumhoreca@yahoo.com</a></p>
+</div>
+</div>
+<div class="footer-bottom">
+Optimum Partnership © 2026. Toate drepturile rezervate.
+</div>
+</footer>
+
+<script>
+let currentIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const slider = document.getElementById('slider');
+
+function updateSlider() {
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
+    // Update dots
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[currentIndex].classList.add('active');
+}
+
+function moveSlide(direction) {
+    currentIndex += direction;
+    if (currentIndex >= slides.length) {
+        currentIndex = 0;
+    } else if (currentIndex < 0) {
+        currentIndex = slides.length - 1;
+    }
+    updateSlider();
+}
+
+function currentSlide(index) {
+    currentIndex = index;
+    updateSlider();
+}
+
+// Auto scroll opțional (la fiecare 5 secunde)
+setInterval(() => {
+    moveSlide(1);
+}, 5000);
+</script>
+
+</body>
+</html>
