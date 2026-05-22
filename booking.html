@@ -890,8 +890,18 @@ function calculateDynamicPrice() {
         document.getElementById('box-price-preluare').innerText = "—";
         document.getElementById('box-price-online').innerText = "—";
     } else {
-        const finalPrice = totalDays * selectedCarPricePerDay;
-        document.getElementById('sum-rate-day').innerText = selectedCarPricePerDay + "€";
+        // Logica de calcul cu reduceri:
+        let dailyRate = parseInt(selectedCarPricePerDay);
+        
+        if (totalDays >= 15) {
+            dailyRate -= 10; // Reducere 10 euro peste 15 zile
+        } else if (totalDays >= 8) {
+            dailyRate -= 5;  // Reducere 5 euro între 8-14 zile
+        }
+
+        const finalPrice = totalDays * dailyRate;
+
+        document.getElementById('sum-rate-day').innerText = dailyRate + "€/zi";
         document.getElementById('sum-total-days').innerText = totalDays + " " + (totalDays === 1 ? "zi" : "zile");
         document.getElementById('sum-final-total').innerText = finalPrice + "€";
         document.getElementById('box-price-preluare').innerText = finalPrice + "€";
