@@ -1035,7 +1035,7 @@ async function handleFinalSubmit(event) {
     }
 
    try {
-        const response = await fetch(API_URL, {
+        const response = await fetch("https://complex-stejarul.ro/salveaza_rezervare.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1043,20 +1043,20 @@ async function handleFinalSubmit(event) {
             body: JSON.stringify(payload)
         });
 
-        const result = await response.json();
+        // Verificăm dacă primim un răspuns text (pentru a vedea dacă e eroare HTML)
+        const textResponse = await response.text();
+        console.log("Răspuns brut:", textResponse); 
 
-        if (result.status !== "success") {
-            throw new Error(result.message || "Eroare la procesarea pe server.");
-        }
+        const result = JSON.parse(textResponse); // Aici va crapa dacă textResponse nu e JSON
 
-        if (selectedPaymentType === 'online') {
-            showStatusModal("Redirecționare Plată", "Înregistrarea a fost salvată cu succes! Te redirecționăm securizat către procesatorul de plăți online...");
+        if (result.status === "success") {
+            showStatusModal("Rezervare Confirmată!", "Înregistrarea ta a fost salvată cu succes!", true);
         } else {
-            showStatusModal("Rezervare Confirmată!", "Înregistrarea ta a fost salvată cu succes în sistem! Plata se va efectua cash sau card direct la sediu (Strada Navelor nr. 2). Vă așteptăm!", true);
+            throw new Error(result.message || "Eroare necunoscută.");
         }
-
     } catch (error) {
-        showStatusModal("Eroare", "A apărut o problemă la salvarea rezervării: " + error.message, true);
+        console.error("Eroare detaliată:", error);
+        showStatusModal("Eroare", "Serverul nu a răspuns corect. Verifică consola (F12).", true);
     }
 </script>
 </body>
