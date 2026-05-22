@@ -986,34 +986,42 @@ function closeStatusModal() {
     document.getElementById('statusModal').style.display = "none";
 }
 
-async function handleFinalSubmit(event) {
+async function submitBooking(event) {
     event.preventDefault();
     
-    showStatusModal("Se procesează...", "Rezervarea ta este transmisă în sistemul securizat Optimum Partnership. Te rugăm să nu închizi fereastra.");
+    if (!document.getElementById('accept_terms').checked) {
+        showStatusModal("Validare Obligatorie", "Trebuie să fii de acord cu Termenii și Condițiile pentru a trimite rezervarea.");
+        return;
+    }
+
+    const dataP = document.getElementById('data_pickup').value;
+    const dataR = document.getElementById('data_dropoff').value;
+    const clientType = document.querySelector('input[name="client_type"]:checked').value;
+    const totalText = document.getElementById('summary_total').innerText;
 
     let payload = {
-        data_preluare: document.getElementById('pickup').value,
-        data_predare: document.getElementById('dropoff').value,
-        locantie_sediu: document.getElementById('address').value,
-        autoturism_selectat: selectedCarGlobal,
-        tip_client: currentProfileType,
+        masina_id: "Skoda Rapid",
+        data_preluare: dataP,
+        data_returnare: dataR,
+        tip_client: clientType,
         metoda_plata: selectedPaymentType,
-        total_plata: document.getElementById('sum-final-total').innerText
+        total_plata: totalText
     };
 
-    if (currentProfileType === 'pf') {
+    // Colectare corectă a datelor fără încurcături între formulare
+    if (clientType === 'pf') {
         payload.nume = document.getElementById('pf-nume').value;
         payload.prenume = document.getElementById('pf-prenume').value;
         payload.cnp = document.getElementById('pf-cnp').value;
+        payload.serie_ci = document.getElementById('pf-serie').value;
         payload.telefon = document.getElementById('pf-telefon').value;
         payload.email = document.getElementById('pf-email').value;
         payload.observatii = document.getElementById('pf-observatii').value;
-    } else {
-        payload.nume_companie = document.getElementById('pj-firma').value;
+    } else if (clientType === 'pj') {
+        payload.companie_nume = document.getElementById('pj-nume').value;
         payload.cui = document.getElementById('pj-cui').value;
-        payload.nr_reg_com = document.getElementById('pj-reg').value;
-        payload.persoana_contact = document.getElementById('pj-contact').value;
-        payload.adresa_sediu = document.getElementById('pj-adresa').value;
+        payload.reg_com = document.getElementById('pj-reg').value;
+        payload.sediu_adresa = document.getElementById('pj-adresa').value;
         payload.telefon = document.getElementById('pj-telefon').value;
         payload.email = document.getElementById('pj-email').value;
         payload.observatii = document.getElementById('pj-observatii').value;
@@ -1042,8 +1050,7 @@ async function handleFinalSubmit(event) {
         }
 
     } catch (error) {
-        showStatusModal("Eroare Rezervare", "A apărut o problemă la salvarea datelor tale. Te rugăm să încerci din nou sau să ne contactezi telefonic.", true);
-        console.error("Supabase Error:", error);
+        showStatusModal("Eroare", "A apărut o problemă la salvarea datelor în sistem. Te rugăm să reîncerci sau să ne contactezi.");
     }
 }
 </script>
