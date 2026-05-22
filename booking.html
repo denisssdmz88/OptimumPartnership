@@ -722,7 +722,10 @@ footer{
                 <h3>Peugeot 308</h3>
                 <div class="car-meta">🕹️ Manuală (6+1) | ⛽ 1.6 HDI</div>
                 <p class="car-price">35€ <span>/ zi</span></p>
-                <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Peugeot 308', 35)">Selectează</button>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Peugeot 308', 35)">Selectează</button>
+                    <a href="peugeot-308.html" target="_blank" class="cta-btn secondary" style="width: 100%; padding: 10px; font-size: 14px;">Vezi detalii 👁️</a>
+                </div>
             </div>
         </div>
         
@@ -732,7 +735,10 @@ footer{
                 <h3>Skoda Rapid</h3>
                 <div class="car-meta">🕹️ Manuală (5+1) | ⛽ 1.6 TDI</div>
                 <p class="car-price">40€ <span>/ zi</span></p>
-                <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Skoda Rapid', 40)">Selectează</button>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Skoda Rapid', 40)">Selectează</button>
+                    <a href="skoda-rapid.html" target="_blank" class="cta-btn secondary" style="width: 100%; padding: 10px; font-size: 14px;">Vezi detalii 👁️</a>
+                </div>
             </div>
         </div>
 
@@ -742,7 +748,23 @@ footer{
                 <h3>Opel Astra</h3>
                 <div class="car-meta">🕹️ Manuală (6+1) | ⛽ 1.5 CDTI</div>
                 <p class="car-price">45€ <span>/ zi</span></p>
-                <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Opel Astra', 45)">Selectează</button>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Opel Astra', 45)">Selectează</button>
+                    <a href="opel-astra.html" target="_blank" class="cta-btn secondary" style="width: 100%; padding: 10px; font-size: 14px;">Vezi detalii 👁️</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="car">
+            <img src="ford.png" alt="Ford Transit Frigorific">
+            <div class="car-details">
+                <h3>Ford Transit Frigorific</h3>
+                <div class="car-meta">🕹️ Manuală | ❄️ Agregat Frigo</div>
+                <p class="car-price">La cerere</p>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Ford Transit Frigorific', 'la_cerere')">Selectează</button>
+                    <a href="ford-transit.html" target="_blank" class="cta-btn secondary" style="width: 100%; padding: 10px; font-size: 14px;">Vezi detalii 👁️</a>
+                </div>
             </div>
         </div>
     </div>
@@ -788,7 +810,7 @@ const SUPABASE_URL = "https://jmjydnpgigrorfxhmtgh.supabase.co/rest/v1/rezervari
 const SUPABASE_KEY = "sb_publishable_pbxILSO05mcbEDo7zaUgLg_BOmQT2Ve"; 
 
 let selectedCarGlobal = "";
-let selectedCarPricePerDay = 0; // REZOLVAT: Redenumit corect conform logicii de calcul
+let selectedCarPricePerDay = 0; 
 let currentProfileType = "pf";
 let selectedPaymentType = "la_preluare"; 
 
@@ -831,24 +853,29 @@ function closeModal(){
 
 function selectCar(carName, price) {
     selectedCarGlobal = carName;
-    selectedCarPricePerDay = price; // REZOLVAT: Salvează corect în variabila unificată
+    selectedCarPricePerDay = price; 
     
-    document.getElementById('selected-car-badge').innerText = "Autoturism selectat: " + carName + " (" + price + "€/zi)";
+    let badgeText = "Autoturism selectat: " + carName;
+    if(price === 'la_preluare' || price === 'la_cerere') {
+        badgeText += " (Preț la cerere)";
+    } else {
+        badgeText += " (" + price + "€/zi)";
+    }
+    
+    document.getElementById('selected-car-badge').innerText = badgeText;
     closeModal();
     
     document.getElementById('map').style.display = "none";
     document.getElementById('checkout-section').style.display = "block";
     
-    // REZOLVAT: Forțează adăugarea atributelor required pentru PF la selecția inițială
     toggleRequiredFields('pf', true);
-    
     calculateDynamicPrice();
     
     document.getElementById('checkout-section').scrollIntoView({ behavior: 'smooth' });
 }
 
 function calculateDynamicPrice() {
-    if(!selectedCarPricePerDay) return; // REZOLVAT: Verifică variabila corectă
+    if(!selectedCarPricePerDay) return;
 
     let totalDays = 1; 
     if(pickupPicker.selectedDates.length > 0 && dropoffPicker.selectedDates.length > 0) {
@@ -857,15 +884,20 @@ function calculateDynamicPrice() {
         totalDays = Math.ceil(diffDays) || 1; 
     }
 
-    let baseTotal = selectedCarPricePerDay * totalDays;
-
-    // REZOLVAT: Ambele căsuțe mari primesc același preț standard, fără reduceri
-    document.getElementById('box-price-preluare').innerText = baseTotal + "€";
-    document.getElementById('box-price-online').innerText = baseTotal + "€";
-
-    document.getElementById('sum-rate-day').innerText = selectedCarPricePerDay + "€";
-    document.getElementById('sum-total-days').innerText = totalDays + (totalDays === 1 ? " zi" : " zile");
-    document.getElementById('sum-final-total').innerText = baseTotal + "€";
+    if(selectedCarPricePerDay === 'la_cerere' || selectedCarPricePerDay === 'la_preluare') {
+        document.getElementById('box-price-preluare').innerText = "La cerere";
+        document.getElementById('box-price-online').innerText = "La cerere";
+        document.getElementById('sum-rate-day').innerText = "La cerere";
+        document.getElementById('sum-total-days').innerText = totalDays + (totalDays === 1 ? " zi" : " zile");
+        document.getElementById('sum-final-total').innerText = "La cerere";
+    } else {
+        let baseTotal = selectedCarPricePerDay * totalDays;
+        document.getElementById('box-price-preluare').innerText = baseTotal + "€";
+        document.getElementById('box-price-online').innerText = baseTotal + "€";
+        document.getElementById('sum-rate-day').innerText = selectedCarPricePerDay + "€";
+        document.getElementById('sum-total-days').innerText = totalDays + (totalDays === 1 ? " zi" : " zile");
+        document.getElementById('sum-final-total').innerText = baseTotal + "€";
+    }
 }
 
 function selectPaymentMethod(method) {
