@@ -193,7 +193,6 @@ input[readonly] {
     flex-shrink: 0;
 }
 
-/* Zonele de Formular Pasul 2 */
 #checkout-section {
     display: none;
     margin-top: 30px;
@@ -212,7 +211,6 @@ input[readonly] {
     text-align: center;
 }
 
-/* Tab-uri Persoana Fizica / Juridica */
 .tabs-container {
     display: flex;
     gap: 10px;
@@ -245,7 +243,7 @@ input[readonly] {
     display: block;
 }
 
-/* --- DESIGN SECȚIUNE PLATĂ DOUĂ CĂSUȚE MARI --- */
+/* --- DESIGN SECȚIUNE PLATĂ MODIFICATĂ --- */
 .payment-grid-wrapper {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -302,17 +300,7 @@ input[readonly] {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 8px;
-}
-
-.pay-badge-discount {
-    background: #00b341;
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
-    padding: 3px 8px;
-    border-radius: 20px;
-    text-transform: uppercase;
+    justify-content: center;
 }
 
 .pay-box-price {
@@ -590,25 +578,25 @@ footer{
                     <div class="row">
                         <div class="form-group-booking">
                             <label>Nume *</label>
-                            <input type="text" id="pf-nume" placeholder="Popescu" required>
+                            <input type="text" id="pf-nume" placeholder="Popescu">
                         </div>
                         <div class="form-group-booking">
                             <label>Prenume *</label>
-                            <input type="text" id="pf-prenume" placeholder="Andrei" required>
+                            <input type="text" id="pf-prenume" placeholder="Andrei">
                         </div>
                     </div>
                     <div class="form-group-booking">
                         <label>CNP *</label>
-                        <input type="text" id="pf-cnp" placeholder="1xxxxxxxxxxxx" required>
+                        <input type="text" id="pf-cnp" placeholder="1xxxxxxxxxxxx">
                     </div>
                     <div class="row">
                         <div class="form-group-booking">
                             <label>Număr de telefon *</label>
-                            <input type="text" id="pf-telefon" placeholder="07xx xxx xxx" required>
+                            <input type="text" id="pf-telefon" placeholder="07xx xxx xxx">
                         </div>
                         <div class="form-group-booking">
                             <label>Adresă de Email *</label>
-                            <input type="email" id="pf-email" placeholder="andrei@gmail.com" required>
+                            <input type="email" id="pf-email" placeholder="andrei@gmail.com">
                         </div>
                     </div>
                     <div class="form-group-booking">
@@ -678,7 +666,6 @@ footer{
                                 <p>Tranzacție rapidă și securizată prin procesator de plăți.</p>
                             </div>
                             <div class="pay-box-right">
-                                <span class="pay-badge-discount">-10% reducere</span>
                                 <div class="pay-box-price" id="box-price-online">0€</div>
                             </div>
                         </div>
@@ -693,10 +680,6 @@ footer{
                         <div class="summary-row">
                             <span>Perioadă închiriere:</span>
                             <span id="sum-total-days">0 zile</span>
-                        </div>
-                        <div class="summary-row" id="sum-discount-wrapper" style="display:none; color: #00b341;">
-                            <span>Reducere online (10%):</span>
-                            <span id="sum-discount-val">0€</span>
                         </div>
                         <div class="summary-row total-row">
                             <span>Total de plată:</span>
@@ -801,16 +784,14 @@ Optimum Partnership © 2026. Toate drepturile rezervate.
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/confirmDate/confirmDate.js"></script>
 
 <script>
-// Configurație API Supabase
 const SUPABASE_URL = "https://jmjydnpgigrorfxhmtgh.supabase.co/rest/v1/rezervari"; 
 const SUPABASE_KEY = "sb_publishable_pbxILSO05mcbEDo7zaUgLg_BOmQT2Ve"; 
 
 let selectedCarGlobal = "";
-let selectedCarPricePriceDay = 0;
+let selectedCarPricePerDay = 0; // REZOLVAT: Redenumit corect conform logicii de calcul
 let currentProfileType = "pf";
-let selectedPaymentType = "la_preluare"; // implicit la_preluare
+let selectedPaymentType = "la_preluare"; 
 
-// Initializare Flatpickr cu recurență de recalculare preț la input modificat
 const fpConfig = {
     enableTime: true,
     time_24hr: true,
@@ -824,7 +805,6 @@ const fpConfig = {
 const pickupPicker = flatpickr("#pickup", fpConfig);
 const dropoffPicker = flatpickr("#dropoff", fpConfig);
 
-// Initializare harta fixata pe sediu
 let map = L.map('map', {
     center: [45.4340, 28.0560],
     zoom: 15,
@@ -849,10 +829,9 @@ function closeModal(){
     document.getElementById('modal').style.display="none";
 }
 
-// Cand se alege masina
 function selectCar(carName, price) {
     selectedCarGlobal = carName;
-    selectedCarPricePriceDay = price;
+    selectedCarPricePerDay = price; // REZOLVAT: Salvează corect în variabila unificată
     
     document.getElementById('selected-car-badge').innerText = "Autoturism selectat: " + carName + " (" + price + "€/zi)";
     closeModal();
@@ -860,48 +839,35 @@ function selectCar(carName, price) {
     document.getElementById('map').style.display = "none";
     document.getElementById('checkout-section').style.display = "block";
     
+    // REZOLVAT: Forțează adăugarea atributelor required pentru PF la selecția inițială
+    toggleRequiredFields('pf', true);
+    
     calculateDynamicPrice();
     
     document.getElementById('checkout-section').scrollIntoView({ behavior: 'smooth' });
 }
 
-// Calcularea totalului în funcție de diferența de zile
 function calculateDynamicPrice() {
-    if(!selectedCarPricePriceDay) return;
+    if(!selectedCarPricePerDay) return; // REZOLVAT: Verifică variabila corectă
 
     let totalDays = 1; 
-    const pickupDateStr = document.getElementById('pickup').value;
-    const dropoffDateStr = document.getElementById('dropoff').value;
-
     if(pickupPicker.selectedDates.length > 0 && dropoffPicker.selectedDates.length > 0) {
         const diffTime = Math.abs(dropoffPicker.selectedDates[0] - pickupPicker.selectedDates[0]);
         const diffDays = diffTime / (1000 * 60 * 60 * 24);
         totalDays = Math.ceil(diffDays) || 1; 
     }
 
-    let baseTotal = selectedCarPricePriceDay * totalDays;
-    let onlineTotal = baseTotal * 0.9; // 10% discount pentru plata online
-    let discountVal = baseTotal * 0.1;
+    let baseTotal = selectedCarPricePerDay * totalDays;
 
-    // Actualizare valori în cele două căsuțe mari
+    // REZOLVAT: Ambele căsuțe mari primesc același preț standard, fără reduceri
     document.getElementById('box-price-preluare').innerText = baseTotal + "€";
-    document.getElementById('box-price-online').innerText = Math.round(onlineTotal) + "€";
+    document.getElementById('box-price-online').innerText = baseTotal + "€";
 
-    // Actualizare Sumar Card Dreapta
-    document.getElementById('sum-rate-day').innerText = selectedCarPricePriceDay + "€";
+    document.getElementById('sum-rate-day').innerText = selectedCarPricePerDay + "€";
     document.getElementById('sum-total-days').innerText = totalDays + (totalDays === 1 ? " zi" : " zile");
-
-    if(selectedPaymentType === 'online') {
-        document.getElementById('sum-discount-wrapper').style.display = "flex";
-        document.getElementById('sum-discount-val').innerText = "-" + Math.round(discountVal) + "€";
-        document.getElementById('sum-final-total').innerText = Math.round(onlineTotal) + "€";
-    } else {
-        document.getElementById('sum-discount-wrapper').style.display = "none";
-        document.getElementById('sum-final-total').innerText = baseTotal + "€";
-    }
+    document.getElementById('sum-final-total').innerText = baseTotal + "€";
 }
 
-// Schimbarea vizuală a modalității de plată
 function selectPaymentMethod(method) {
     selectedPaymentType = method;
     document.querySelectorAll('.pay-box').forEach(box => box.classList.remove('selected'));
@@ -919,7 +885,6 @@ function selectPaymentMethod(method) {
     calculateDynamicPrice();
 }
 
-// Schimbarea intre PF si PJ
 function switchTab(type) {
     currentProfileType = type;
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -956,7 +921,6 @@ function toggleRequiredFields(type, isRequired) {
     }
 }
 
-// Management modal raspuns status pe mijloc
 function showStatusModal(title, text, showButton = false) {
     const modal = document.getElementById('statusModal');
     document.getElementById('statusModalTitle').innerText = title;
@@ -969,24 +933,21 @@ function closeStatusModal() {
     document.getElementById('statusModal').style.display = "none";
 }
 
-// Integrare Trimitere Date Supabase
 async function handleFinalSubmit(event) {
     event.preventDefault();
     
     showStatusModal("Se procesează...", "Rezervarea ta este transmisă în sistemul securizat Optimum Partnership. Te rugăm să nu închizi fereastra.");
 
-    // Pregatire payload obiect date
     let payload = {
         data_preluare: document.getElementById('pickup').value,
         data_predare: document.getElementById('dropoff').value,
-        locatie_sediu: document.getElementById('address').value,
+        locantie_sediu: document.getElementById('address').value,
         autoturism_selectat: selectedCarGlobal,
         tip_client: currentProfileType,
         metoda_plata: selectedPaymentType,
         total_plata: document.getElementById('sum-final-total').innerText
     };
 
-    // Populare conditională în funcție de tipul de client
     if (currentProfileType === 'pf') {
         payload.nume = document.getElementById('pf-nume').value;
         payload.prenume = document.getElementById('pf-prenume').value;
@@ -1021,10 +982,8 @@ async function handleFinalSubmit(event) {
             throw new Error("Eroare la comunicarea cu serverul.");
         }
 
-        // Succes salvari in baza de date
         if (selectedPaymentType === 'online') {
             showStatusModal("Redirecționare Plată", "Înregistrarea a fost salvată cu succes! Te redirecționăm securizat către procesatorul de plăți online...");
-            // Aici poți adăuga logica de redirect către Stripe/Netopia după 2-3 secunde dacă e cazul
         } else {
             showStatusModal("Rezervare Confirmată!", "Înregistrarea ta a fost salvată cu succes în sistem! Plata se va efectua cash sau card direct la sediu (Strada Navelor nr. 2). Vă așteptăm!", true);
         }
