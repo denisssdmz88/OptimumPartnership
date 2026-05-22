@@ -828,12 +828,12 @@ const pickupPicker = flatpickr("#data_pickup", {
     enableTime: true,
     dateFormat: "Y-m-d H:i",
     time_24hr: true,
-    minDate: "today", // Blochează zilele din trecut (ex: tot ce e înainte de azi)
+    minDate: "today",
     locale: "ro",
+    plugins: [new confirmDatePlugin({confirmText: "Confirmă", showAlways: false})],
     onChange: function(selectedDates, dateStr, instance) {
-        // Când alegi data de pickup, data de dropoff nu poate fi înaintea ei
         dropoffPicker.set("minDate", dateStr);
-        calculeazaTotal(); // sau cum se numește funcția ta de calcul
+        calculeazaTotal();
     }
 });
 
@@ -841,8 +841,9 @@ const dropoffPicker = flatpickr("#data_dropoff", {
     enableTime: true,
     dateFormat: "Y-m-d H:i",
     time_24hr: true,
-    minDate: "today", // Implicit nu lasă zile din trecut
+    minDate: "today",
     locale: "ro",
+    plugins: [new confirmDatePlugin({confirmText: "Confirmă", showAlways: false})],
     onChange: function() {
         calculeazaTotal();
     }
