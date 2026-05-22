@@ -693,7 +693,14 @@ footer{
                     <input type="checkbox">
                     <span>Sunt de acord să primesc materiale promoționale și oferte speciale (Opțional)</span>
                 </label>
-
+                    <div class="contact-buttons" style="margin-top: 20px; text-align: center;">
+    <a href="https://wa.me/40744700230?text=Bună! Aș dori să verific disponibilitatea pentru o mașină." 
+       target="_blank" 
+       class="btn-contact" 
+       style="display: inline-block; padding: 12px 25px; background: #25D366; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+       📞 Contactează-ne pe WhatsApp pentru a verifica disponibiliatatea
+    </a>
+</div>
                 <button type="submit" id="submit-booking-btn" class="cta-btn" style="width: 100%; margin-top: 25px; padding: 16px; font-size: 18px;">Finalizează Rezervarea</button>
             </form>
         </div>
@@ -908,6 +915,7 @@ function calculateDynamicPrice() {
         document.getElementById('box-price-online').innerText = finalPrice + "€";
     }
 }
+    
 
 function switchTab(type) {
     currentProfileType = type;
