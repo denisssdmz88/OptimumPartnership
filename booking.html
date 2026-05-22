@@ -25,7 +25,6 @@ body{
     color: #fff;
 }
 
-/* Header identic cu prima pagina */
 header{
     position: fixed;
     width: 100%;
@@ -94,7 +93,6 @@ nav a:hover{
     color: black;
 }
 
-/* Sectiunea Hero adaptata pentru Booking */
 .hero{
     height: 40vh;
     display: flex;
@@ -111,7 +109,6 @@ nav a:hover{
     font-size: 48px;
 }
 
-/* Container si Formular */
 .container{
     padding: 60px 8%;
     max-width: 900px;
@@ -143,6 +140,7 @@ nav a:hover{
 .form-group-booking {
     display: flex;
     flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .form-group-booking label {
@@ -151,7 +149,7 @@ nav a:hover{
     margin-bottom: 8px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="email"], textarea, select {
     width: 100%;
     padding: 16px;
     background: #252525;
@@ -162,13 +160,12 @@ input[type="text"] {
     transition: .3s;
 }
 
-input[type="text"]:focus {
+input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: #ffb400;
     background: #2a2a2a;
 }
 
-/* Stil pentru input adresa dezactivat */
 input[readonly] {
     background: #1a1a1a;
     border-color: #222;
@@ -179,11 +176,11 @@ input[readonly] {
 
 .checkbox-container {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 25px 0;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 15px 0;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 14px;
     color: #ccc;
 }
 
@@ -191,6 +188,60 @@ input[readonly] {
     width: 18px;
     height: 18px;
     accent-color: #ffb400;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* Zonele de Formular Pasul 2 */
+#checkout-section {
+    display: none;
+    margin-top: 30px;
+    border-top: 1px solid #333;
+    padding-top: 30px;
+}
+
+.selected-car-badge {
+    background: rgba(255, 180, 0, 0.1);
+    border: 1px dashed #ffb400;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    color: #ffb400;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Tab-uri Persoana Fizica / Juridica */
+.tabs-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 14px;
+    background: #252525;
+    border: 1px solid #333;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    background: #ffb400;
+    color: black;
+    border-color: #ffb400;
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
 }
 
 /* Modal-ul de masini */
@@ -226,9 +277,9 @@ input[readonly] {
 .car{
     background: #1c1c1c;
     border-radius: 15px;
-    padding: 25px;
     border: 1px solid #222;
     transition: .3s;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -237,6 +288,16 @@ input[readonly] {
 .car:hover {
     transform: translateY(-5px);
     border-color: #ffb400;
+}
+
+.car img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.car-details {
+    padding: 20px;
 }
 
 .car h3 {
@@ -343,30 +404,143 @@ footer{
 
 <div class="container">
     <div class="card">
-        <div class="form-group-booking">
-            <label for="address">Locație fixă preluare / predare sediu</label>
-            <input type="text" id="address" value="Strada Navelor nr. 2, Galați" readonly>
-        </div>
         
-        <div id="map"></div>
+        <div id="step-1-fields">
+            <div class="form-group-booking">
+                <label for="address">Locație fixă preluare / predare sediu</label>
+                <input type="text" id="address" value="Strada Navelor nr. 2, Galați" readonly>
+            </div>
+            
+            <div id="map"></div>
 
-        <div class="row">
-            <div class="form-group-booking">
-                <label for="pickup">Data și ora preluării</label>
-                <input type="text" id="pickup" placeholder="Selectează data">
+            <div class="row">
+                <div class="form-group-booking">
+                    <label for="pickup">Data și ora preluării</label>
+                    <input type="text" id="pickup" placeholder="Selectează data">
+                </div>
+                <div class="form-group-booking">
+                    <label for="dropoff">Data și ora predării</label>
+                    <input type="text" id="dropoff" placeholder="Selectează data">
+                </div>
             </div>
-            <div class="form-group-booking">
-                <label for="dropoff">Data și ora predării</label>
-                <input type="text" id="dropoff" placeholder="Selectează data">
-            </div>
+
+            <label class="checkbox-container">
+                <input type="checkbox" id="license"> 
+                Am permis de conducere cu o vechime de minim 1 an
+            </label>
+            
+            <button class="cta-btn" style="width: 100%; text-align: center;" onclick="openModal()">Alege mașina</button>
         </div>
 
-        <label class="checkbox-container">
-            <input type="checkbox" id="license"> 
-            Am permis de conducere cu o vechime de minim 1 an
-        </label>
-        
-        <button class="cta-btn" style="width: 100%; text-align: center;" onclick="openModal()">Alege mașina</button>
+        <div id="checkout-section">
+            <div class="selected-car-badge" id="selected-car-badge">Autoturism selectat: </div>
+            
+            <div class="tabs-container">
+                <button type="button" class="tab-btn active" onclick="switchTab('pf')">Persoană Fizică</button>
+                <button type="button" class="tab-btn" onclick="switchTab('pj')">Persoană Juridică</button>
+            </div>
+
+            <form onsubmit="handleFinalSubmit(event)">
+                
+                <div id="panel-pf" class="tab-panel active">
+                    <div class="row">
+                        <div class="form-group-booking">
+                            <label>Nume *</label>
+                            <input type="text" id="pf-nume" placeholder="Popescu" required>
+                        </div>
+                        <div class="form-group-booking">
+                            <label>Prenume *</label>
+                            <input type="text" id="pf-prenume" placeholder="Andrei" required>
+                        </div>
+                    </div>
+                    <div class="form-group-booking">
+                        <label>CNP *</label>
+                        <input type="text" id="pf-cnp" placeholder="1xxxxxxxxxxxx" required>
+                    </div>
+                    <div class="row">
+                        <div class="form-group-booking">
+                            <label>Număr de telefon *</label>
+                            <input type="text" id="pf-telefon" placeholder="07xx xxx xxx" required>
+                        </div>
+                        <div class="form-group-booking">
+                            <label>Adresă de Email *</label>
+                            <input type="email" id="pf-email" placeholder="andrei@gmail.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group-booking">
+                        <label>Alte observații</label>
+                        <textarea id="pf-observatii" placeholder="Mențiuni suplimentare..."></textarea>
+                    </div>
+                </div>
+
+                <div id="panel-pj" class="tab-panel">
+                    <div class="row">
+                        <div class="form-group-booking">
+                            <label>Numele Companiei *</label>
+                            <input type="text" id="pj-firma" placeholder="Ex: SC COMPANIA SRL">
+                        </div>
+                        <div class="form-group-booking">
+                            <label>CUI *</label>
+                            <input type="text" id="pj-cui" placeholder="ROxxxxxxxx">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group-booking">
+                            <label>Nr. Reg. Com *</label>
+                            <input type="text" id="pj-reg" placeholder="Jxx/xxxx/xxxx">
+                        </div>
+                        <div class="form-group-booking">
+                            <label>Persoană de contact *</label>
+                            <input type="text" id="pj-contact" placeholder="Nume reprezentant">
+                        </div>
+                    </div>
+                    <div class="form-group-booking">
+                        <label>Adresă Sediu Companie *</label>
+                        <input type="text" id="pj-adresa" placeholder="Oraș, Stradă, Număr">
+                    </div>
+                    <div class="row">
+                        <div class="form-group-booking">
+                            <label>Număr de telefon *</label>
+                            <input type="text" id="pj-telefon" placeholder="07xx xxx xxx">
+                        </div>
+                        <div class="form-group-booking">
+                            <label>Adresă de Email *</label>
+                            <input type="email" id="pj-email" placeholder="office@companie.ro">
+                        </div>
+                    </div>
+                    <div class="form-group-booking">
+                        <label>Alte observații</label>
+                        <textarea id="pj-observatii" placeholder="Mențiuni suplimentare..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group-booking" style="margin-top: 20px;">
+                    <label for="payment-method">Modalitate de plată *</label>
+                    <select id="payment-method" required>
+                        <option value="la_preluare">Plată la preluare (Numerar / Card la sediu)</option>
+                        <option value="online">Plată online cu cardul</option>
+                    </select>
+                </div>
+
+                <label class="checkbox-container">
+                    <input type="checkbox" required>
+                    <span>Am citit și sunt de acord cu <b>Termenii și Condițiile</b> de închiriere *</span>
+                </label>
+
+                <label class="checkbox-container">
+                    <input type="checkbox" required>
+                    <span>Am luat la cunoștință <b>Politica de confidențialitate</b> *</span>
+                </label>
+
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span>Sunt de acord să primesc materiale promoționale și oferte speciale (Opțional)</span>
+                </label>
+
+                <button type="submit" class="cta-btn" style="width: 100%; margin-top: 25px; padding: 16px; font-size: 18px;">Continuă spre Finalizare / Plată</button>
+            </form>
+        </div>
+
     </div>
 </div>
 
@@ -378,33 +552,30 @@ footer{
     <div class="cars">
         
         <div class="car">
-            <div>
+            <img src="peugeot.png" alt="Peugeot 308">
+            <div class="car-details">
                 <h3>Peugeot 308</h3>
                 <div class="car-meta">🕹️ Manuală (6+1) | ⛽ 1.6 HDI</div>
-            </div>
-            <div>
                 <p class="car-price">35€ <span>/ zi</span></p>
                 <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Peugeot 308')">Selectează</button>
             </div>
         </div>
         
         <div class="car">
-            <div>
+            <img src="skoda_fata.png" alt="Skoda Rapid">
+            <div class="car-details">
                 <h3>Skoda Rapid</h3>
                 <div class="car-meta">🕹️ Manuală (5+1) | ⛽ 1.6 TDI</div>
-            </div>
-            <div>
                 <p class="car-price">40€ <span>/ zi</span></p>
                 <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Skoda Rapid')">Selectează</button>
             </div>
         </div>
 
         <div class="car">
-            <div>
+            <img src="opel_fata.png" alt="Opel Astra">
+            <div class="car-details">
                 <h3>Opel Astra</h3>
                 <div class="car-meta">🕹️ Manuală (6+1) | ⛽ 1.5 CDTI</div>
-            </div>
-            <div>
                 <p class="car-price">45€ <span>/ zi</span></p>
                 <button class="cta-btn" style="width: 100%; padding: 12px;" onclick="selectCar('Opel Astra')">Selectează</button>
             </div>
@@ -441,6 +612,9 @@ Optimum Partnership © 2026. Toate drepturile rezervate.
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/confirmDate/confirmDate.js"></script>
 
 <script>
+let selectedCarGlobal = "";
+let currentProfileType = "pf";
+
 // Initializare Flatpickr pentru date
 flatpickr("#pickup",{enableTime:true,time_24hr:true,dateFormat:"d.m.Y H:i",
 plugins:[new confirmDatePlugin({confirmText:"Confirmă"})]});
@@ -448,41 +622,93 @@ plugins:[new confirmDatePlugin({confirmText:"Confirmă"})]});
 flatpickr("#dropoff",{enableTime:true,time_24hr:true,dateFormat:"d.m.Y H:i",
 plugins:[new confirmDatePlugin({confirmText:"Confirmă"})]});
 
-// Initializare harta blocata pe coordonatele strazii Navelor nr. 2 [45.4340, 28.0560]
+// Initializare harta fixata pe sediu
 let map = L.map('map', {
     center: [45.4340, 28.0560],
     zoom: 15,
-    zoomControl: false // design mai aerisit
+    zoomControl: false
 });
-
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-// Adaugare marker fix pe pozitia sediului
-let marker = L.marker([45.4340, 28.0560])
-    .addTo(map)
-    .bindPopup('<b>Optimum Partnership</b><br>Locație preluare/predare marcată.')
-    .openPopup();
+L.marker([45.4340, 28.0560]).addTo(map).bindPopup('<b>Optimum Partnership</b>').openPopup();
 
 function openModal(){
     const pickup = document.getElementById('pickup');
     const dropoff = document.getElementById('dropoff');
     const license = document.getElementById('license');
-    const modal = document.getElementById('modal');
 
     if(!pickup.value || !dropoff.value || !license.checked){
-        alert("Te rugăm să completezi datele de preluare/predare și să bifezi deținerea permisului auto.");
+        alert("Te rugăm să completezi datele de preluare/predare și să bifezi vechimea permisului.");
         return;
     }
-    modal.style.display="block";
+    document.getElementById('modal').style.display="block";
 }
 
 function closeModal(){
     document.getElementById('modal').style.display="none";
 }
 
+// Cand selecteaza masina, inchidem modalul si activam Pasul 2 (Formularul)
 function selectCar(carName) {
-    alert('Ai selectat cu succes autoturismul: ' + carName + '. Solicitarea ta de rezervare a fost înregistrată!');
+    selectedCarGlobal = carName;
+    document.getElementById('selected-car-badge').innerText = "Autoturism selectat: " + carName;
     closeModal();
+    
+    // Ascundem elementele initiale si afisam formularul de checkout
+    document.getElementById('map').style.display = "none";
+    document.getElementById('checkout-section').style.display = "block";
+    
+    // Scroll lin catre formular
+    document.getElementById('checkout-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Schimbarea intre PF si PJ
+function switchTab(type) {
+    currentProfileType = type;
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+    
+    if(type === 'pf') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('panel-pf').classList.add('active');
+        // Punem câmpurile obligatorii la PF și scoatem de la PJ
+        toggleRequiredFields('pf', true);
+        toggleRequiredFields('pj', false);
+    } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('panel-pj').classList.add('active');
+        toggleRequiredFields('pf', false);
+        toggleRequiredFields('pj', true);
+    }
+}
+
+function toggleRequiredFields(type, isRequired) {
+    if(type === 'pf') {
+        document.getElementById('pf-nume').required = isRequired;
+        document.getElementById('pf-prenume').required = isRequired;
+        document.getElementById('pf-cnp').required = isRequired;
+        document.getElementById('pf-telefon').required = isRequired;
+        document.getElementById('pf-email').required = isRequired;
+    } else {
+        document.getElementById('pj-firma').required = isRequired;
+        document.getElementById('pj-cui').required = isRequired;
+        document.getElementById('pj-reg').required = isRequired;
+        document.getElementById('pj-contact').required = isRequired;
+        document.getElementById('pj-adresa').required = isRequired;
+        document.getElementById('pj-telefon').required = isRequired;
+        document.getElementById('pj-email').required = isRequired;
+    }
+}
+
+// Trimiterea finala
+function handleFinalSubmit(event) {
+    event.preventDefault();
+    const payment = document.getElementById('payment-method').value;
+    
+    if(payment === 'online') {
+        alert('Redirecționare către procesatorul de plăți securizate pentru rezervarea mașinii ' + selectedCarGlobal + '...');
+    } else {
+        alert('Rezervarea pentru ' + selectedCarGlobal + ' a fost trimisă cu succes! Plata se va efectua cash sau card direct la sediu (Strada Navelor nr. 2). Vă așteptăm!');
+    }
 }
 </script>
 
