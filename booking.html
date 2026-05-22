@@ -239,10 +239,6 @@ input[readonly] {
     display: none;
 }
 
-.tab-panel.active {
-    display: block;
-}
-
 .payment-grid-wrapper {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -535,7 +531,7 @@ footer{
         
         <div id="step-1-fields">
             <div class="form-group-booking">
-                <label for="address">Locație fixă preluare / predare sediu</label>
+                <label for="address">Locație preluare / predare</label>
                 <input type="text" id="address" value="Strada Navelor nr. 2, Galați" readonly>
             </div>
             
@@ -570,7 +566,7 @@ footer{
 
             <form onsubmit="handleFinalSubmit(event)">
                 
-                <div id="panel-pf" class="tab-panel active">
+                <div id="panel-pf" class="tab-panel" style="display: block;">
                     <div class="row">
                         <div class="form-group-booking">
                             <label>Nume *</label>
@@ -601,7 +597,7 @@ footer{
                     </div>
                 </div>
 
-                <div id="panel-pj" class="tab-panel">
+                <div id="panel-pj" class="tab-panel" style="display: none;">
                     <div class="row">
                         <div class="form-group-booking">
                             <label>Numele Companiei *</label>
@@ -649,7 +645,7 @@ footer{
                         <div class="pay-box selected" id="opt-preluare" onclick="selectPaymentMethod('la_preluare')">
                             <div class="pay-box-details">
                                 <h4>Plată la preluare</h4>
-                                <p>Achiți cash sau cu cardul direct la sediu când ridici cheile.</p>
+                                <p>Achiți cash sau cu cardul la preluare.</p>
                             </div>
                             <div class="pay-box-right">
                                 <div class="pay-box-price" id="box-price-preluare">0€</div>
@@ -659,7 +655,7 @@ footer{
                         <div class="pay-box" id="opt-online" onclick="selectPaymentMethod('online')">
                             <div class="pay-box-details">
                                 <h4>Plată online cu cardul</h4>
-                                <p>Tranzacție rapidă și securizată prin procesator de plăți.</p>
+                                <p>Tranzacție rapidă și securizată online.</p>
                             </div>
                             <div class="pay-box-right">
                                 <div class="pay-box-price" id="box-price-online">0€</div>
@@ -808,15 +804,16 @@ let selectedCarPricePerDay = 0;
 let currentProfileType = "pf";
 let selectedPaymentType = "la_preluare";
 
-
+// Inițializare Flatpickr cu blocare date din trecut
 const pickupPicker = flatpickr("#pickup", {
     enableTime: true,
     dateFormat: "d.m.Y H:i",
     time_24hr: true,
     minDate: "today",
     locale: "ro",
+    plugins: [new confirmDatePlugin({confirmText: "Confirmă", showConfirmButton: true})],
     onChange: function(selectedDates, dateStr, instance) {
-        if (selectedDates[0]) {
+        if(selectedDates.length > 0) {
             dropoffPicker.set("minDate", selectedDates[0]);
         }
         calculateDynamicPrice();
@@ -829,6 +826,7 @@ const dropoffPicker = flatpickr("#dropoff", {
     time_24hr: true,
     minDate: "today",
     locale: "ro",
+    plugins: [new confirmDatePlugin({confirmText: "Confirmă", showConfirmButton: true})],
     onChange: function() {
         calculateDynamicPrice();
     }
@@ -860,14 +858,16 @@ function selectCar(carName, price) {
     selectedCarPricePerDay = price;
 
     let badgeText = "Autoturism selectat: " + carName;
-    if(price === 'la_cerere' || price === 'la_preluare') {
+    if(price === 'la_cerere') {
         badgeText += " (Preț la cerere)";
     } else {
         badgeText += " (" + price + "€/zi)";
     }
     document.getElementById('selected-car-badge').innerText = badgeText;
     closeModal();
-    document.getElementById('map').style.style.display = "none";
+    
+    // REZOLVAT: S-a eliminat .style-ul dublu care strica scriptul
+    document.getElementById('map').style.display = "none";
     document.getElementById('checkout-section').style.display = "block";
     
     switchTab(currentProfileType);
@@ -885,7 +885,7 @@ function calculateDynamicPrice() {
         totalDays = Math.ceil(diffDays) || 1;
     }
 
-    if(selectedCarPricePerDay === 'la_cerere' || typeof selectedCarPricePerDay === 'string') {
+    if(selectedCarPricePerDay === 'la_cerere') {
         document.getElementById('sum-rate-day').innerText = "La cerere";
         document.getElementById('sum-total-days').innerText = totalDays + " zile";
         document.getElementById('sum-final-total').innerText = "La cerere";
@@ -902,36 +902,30 @@ function calculateDynamicPrice() {
 }
 
 function switchTab(type) {
-    currentProfileType = type; // Actualizează tipul curent (pf / pj)
+    currentProfileType = type;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
 
-    // Elimină clasa active de pe toate butoanele de tab și adaug-o pe cel selectat
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    if (type === 'pf') {
-        document.querySelector("button[onclick=\"switchTab('pf')\"]").classList.add('active');
+    if(type === 'pf') {
+        document.getElementById('tab-pf').classList.add('active');
+        document.getElementById('panel-pf').style.display = "block";
+        document.getElementById('panel-pj').style.display = "none";
+        toggleRequiredFields('pf', true);
     } else {
-        document.querySelector("button[onclick=\"switchTab('pj')\"]").classList.add('active');
+        document.getElementById('tab-pj').classList.add('active');
+        document.getElementById('panel-pj').style.display = "block";
+        document.getElementById('panel-pf').style.display = "none";
+        toggleRequiredFields('pj', true);
     }
-
-    // Ascunde ambele panouri și afișează-lo doar pe cel selectat
-    document.getElementById('panel-pf').style.display = 'none';
-    document.getElementById('panel-pj').style.display = 'none';
-    
-    document.getElementById('panel-' + type).style.display = 'block';
-
-    // Apelează funcția de validare/required în funcție de tab-ul ales
-    toggleRequiredFields(type, true);
-}
 }
 
 function toggleRequiredFields(type, isRequired) {
-    if (type === 'pf') {
+    if(type === 'pf') {
         document.getElementById('pf-nume').required = isRequired;
         document.getElementById('pf-prenume').required = isRequired;
         document.getElementById('pf-cnp').required = isRequired;
         document.getElementById('pf-telefon').required = isRequired;
         document.getElementById('pf-email').required = isRequired;
 
-        // Dezactivează obligativitatea la PJ
         document.getElementById('pj-firma').required = false;
         document.getElementById('pj-cui').required = false;
         document.getElementById('pj-reg').required = false;
@@ -946,7 +940,6 @@ function toggleRequiredFields(type, isRequired) {
         document.getElementById('pf-telefon').required = false;
         document.getElementById('pf-email').required = false;
 
-        // Activează obligativitatea la PJ
         document.getElementById('pj-firma').required = isRequired;
         document.getElementById('pj-cui').required = isRequired;
         document.getElementById('pj-reg').required = isRequired;
@@ -955,7 +948,6 @@ function toggleRequiredFields(type, isRequired) {
         document.getElementById('pj-telefon').required = isRequired;
         document.getElementById('pj-email').required = isRequired;
     }
-}
 }
 
 function selectPaymentMethod(method) {
@@ -1005,7 +997,6 @@ async function handleFinalSubmit(event) {
         finalCost = (totalDays * selectedCarPricePerDay).toString();
     }
 
-    // Payload-ul complet mapat corect pe structura bazei de date Supabase
     let payload = {
         locatie_preluare: document.getElementById('address').value,
         data_preluare: pickupPicker.selectedDates[0] ? pickupPicker.selectedDates[0].toISOString() : null,
@@ -1024,7 +1015,6 @@ async function handleFinalSubmit(event) {
         payload.email = document.getElementById('pf-email').value;
         payload.observatii = document.getElementById('pf-observatii').value;
         
-        // Golire câmpuri PJ în cazul în care s-au completat anterior
         payload.nume_companie = null;
         payload.cui = null;
         payload.reg_com = null;
@@ -1040,7 +1030,6 @@ async function handleFinalSubmit(event) {
         payload.email = document.getElementById('pj-email').value;
         payload.observatii = document.getElementById('pj-observatii').value;
         
-        // Golire câmpuri PF
         payload.nume = null;
         payload.prenume = null;
         payload.cnp = null;
@@ -1064,7 +1053,6 @@ async function handleFinalSubmit(event) {
 
         if (selectedPaymentType === 'online') {
             showStatusModal("Redirecționare Plată", "Înregistrarea a fost salvată cu succes! Te redirecționăm securizat către procesatorul de plăți online...");
-            // Aici se poate adăuga logica de redirect către Stripe/Netopia în viitor.
         } else {
             showStatusModal("Rezervare Confirmată!", "Înregistrarea ta a fost salvată cu succes în sistem! Plata se va efectua cash sau card direct la sediu (Strada Navelor nr. 2). Vă așteptăm!", true);
         }
