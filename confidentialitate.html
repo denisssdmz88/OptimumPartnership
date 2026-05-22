@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politică de Confidențialitate - OPTIMUM PARTNERSHIP</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        /* Paleta de culori păstrată identic pentru continuitate */
+        :root {
+            --bg-main: #121212;         
+            --bg-card: #1e1e1e;         
+            --accent-color: #ffb703;    
+            --text-main: #ffffff;       
+            --text-muted: #aaaaaa;      
+            --border-color: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Header / Navbar comun */
+        .site-header {
+            background-color: rgba(18, 18, 18, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-nav {
+            background-color: var(--accent-color);
+            color: #000000 !important;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600 !important;
+        }
+
+        /* Zona centrală de conținut */
+        .terms-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .terms-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .meta-date {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Caseta cu datele fiscale */
+        .company-box {
+            background-color: rgba(255, 183, 3, 0.05);
+            border: 1px dashed var(--accent-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 35px;
+        }
+
+        .company-box p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .company-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .company-box strong {
+            color: var(--accent-color);
+        }
+
+        /* Secțiunile de text */
+        h2 {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        li {
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .btn-action-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #000000;
+            padding: 14px 40px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            transform: scale(1.02);
+            background-color: #e5a100;
+        }
+
+        @media (max-width: 768px) {
+            .site-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .terms-card {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo">OPTIMUM <span>PARTNERSHIP</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Acasă</a></li>
+            <li><a href="flota.html">Flotă</a></li>
+            <li><a href="despre.html">Despre</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="booking.html" class="btn-nav">Rezervă acum</a></li>
+        </ul>
+    </header>
+
+    <div class="terms-container">
+        <div class="terms-card">
+            <h1>Politică de Confidențialitate</h1>
+            <div class="meta-date">Ultima actualizare: 22.05.2026</div>
+
+            <div class="company-box">
+                <p><strong>Operator de date:</strong> OPTIMUM PARTNERSHIP S.R.L.</p>
+                <p><strong>CUI:</strong> RO43601888 | <strong>Reg. Com:</strong> J2021000125175</p>
+                <p><strong>Sediu Social:</strong> Str. Navelor nr. 2, Galați, România</p>
+                <p><strong>E-mail contact:</strong> contact@optimum-partnership.ro (sau adresa voastră de mail)</p>
+            </div>
+
+            <p>Protecția datelor dumneavoastră cu caracter personal este extrem de importantă pentru noi. Această Politică de Confidențialitate explică modul în care <strong>OPTIMUM PARTNERSHIP S.R.L.</strong> colectează, utilizează, stochează și protejează informațiile pe care le furnizați atunci când folosiți platforma noastră de închirieri auto, în conformitate cu Regulamentul European nr. 2016/679 (GDPR).</p>
+
+            <h2>1. Ce date colectăm?</h2>
+            <p>Atunci când folosiți formularul de rezervare (booking) sau pagina de contact, colectăm doar datele strict necesare pentru procesarea cererii de închiriere auto:</p>
+            <ul>
+                <li>Nume și prenume;</li>
+                <li>Număr de telefon și adresă de e-mail;</li>
+                <li>Locația și data/ora de preluare/predare a mașinii;</li>
+                <li>Informații specifice necesare validării eligibilității de șofer (vârstă, detalii opționale privind permisul, dacă sunt solicitate în pașii următori).</li>
+            </ul>
+
+            <h2>2. Scopul prelucrării datelor</h2>
+            <p>Datele dumneavoastră sunt prelucrate în mod legal și transparent, având ca scopuri principale:</p>
+            <ul>
+                <li><strong>Preluarea și validarea rezervărilor:</strong> Verificarea disponibilității flotei auto și contactarea dumneavoastră pentru confirmarea detaliilor.</li>
+                <li><strong>Pregătirea contractului:</strong> Întocmirea documentelor legale preliminare necesare închirierii mașinii.</li>
+                <li><strong>Comunicare directă:</strong> Răspunsul la mesaje, întrebări sau solicitări de suport transmise prin formularele de pe site.</li>
+            </ul>
+
+            <h2>3. Cât timp păstrăm datele?</h2>
+            <p>Datele cu caracter personal colectate prin intermediul site-ului vor fi stocate doar atât timp cât este necesar pentru îndeplinirea scopurilor menționate (de exemplu, finalizarea perioadei de închiriere auto solicitate și îndeplinirea obligațiilor fiscale) sau până când ne solicitați ștergerea acestora, cu excepția cazurilor în care legea ne obligă să le păstrăm o perioadă mai lungă.</p>
+
+            <h2>4. Securitatea datelor dumneavoastră</h2>
+            <p>Utilizăm măsuri tehnice și organizatorice moderne (criptare conexiune prin protocol HTTPS/SSL, firewall-uri și stocare securizată a bazelor de date) pentru a preveni accesul neautorizat, pierderea sau modificarea informațiilor dumneavoastră personale.</p>
+
+            <h2>5. Drepturile dumneavoastră (conform GDPR)</h2>
+            <p>În calitate de utilizator al site-ului, aveți următoarele drepturi garantate de lege:</p>
+            <ul>
+                <li><strong>Dreptul de acces:</strong> Puteți solicita o confirmare a faptului că datele vă sunt sau nu prelucrate de către noi.</li>
+                <li><strong>Dreptul la rectificare:</strong> Puteți cere corectarea datelor personale inexacte sau incomplete.</li>
+                <li><strong>Dreptul la ștergere („dreptul de a fi uitat”):</strong> Puteți solicita ștergerea datelor din sistemele noastre, dacă acestea nu mai sunt necesare scopului inițial.</li>
+                <li><strong>Dreptul la restricționarea prelucrării sau opoziție:</strong> Vă puteți opune prelucrării datelor în anumite condiții specifice.</li>
+            </ul>
+            <p>Pentru a vă exercita oricare dintre aceste drepturi, ne puteți trimite o solicitare scrisă pe adresa de e-mail a societății.</p>
+
+            <div class="btn-action-container">
+                <a href="booking.html" class="btn-back">Înapoi la Rezervare</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
