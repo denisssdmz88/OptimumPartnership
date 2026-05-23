@@ -16,36 +16,39 @@
             --border-color: #333333;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+       *{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:'Poppins',sans-serif;
+}
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
+body{
+background:#111;
+color:#fff;
+line-height:1.6;
+padding-top:95px;
+}
 
-      header{
+header{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 padding:25px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
 z-index:1000;
-background:rgba(0,0,0,0.35);
+background:rgba(0,0,0,.35);
 backdrop-filter:blur(8px);
-border-bottom:1px solid rgba(255,255,255,0.05);
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .logo{
 font-size:24px;
 font-weight:bold;
-letter-spacing:0.5px;
+letter-spacing:.5px;
 }
 
 .logo span{
@@ -53,8 +56,8 @@ color:#ffb400;
 }
 
 .logo a{
-color:white;
 text-decoration:none;
+color:white;
 }
 
 nav{
@@ -81,9 +84,9 @@ color:black;
 font-weight:bold;
 text-decoration:none;
 display:inline-block;
-transition:.3s;
 border:none;
 cursor:pointer;
+transition:.3s;
 }
 
 .cta-btn:hover{
@@ -97,6 +100,88 @@ font-size:32px;
 cursor:pointer;
 color:white;
 user-select:none;
+}
+
+.terms-container{
+max-width:900px;
+margin:60px auto;
+padding:0 20px;
+}
+
+.terms-card{
+background:#1c1c1c;
+border:1px solid #222;
+border-radius:20px;
+padding:40px;
+box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+
+h1{
+font-size:42px;
+margin-bottom:10px;
+text-align:center;
+}
+
+.meta-date{
+color:#ffb400;
+font-size:14px;
+text-align:center;
+margin-bottom:30px;
+}
+
+.company-box{
+background:rgba(255,180,0,.05);
+border:1px dashed #ffb400;
+border-radius:12px;
+padding:20px;
+margin-bottom:35px;
+}
+
+.company-box p{
+margin-bottom:8px;
+}
+
+.company-box strong{
+color:#ffb400;
+}
+
+h2{
+color:#ffb400;
+font-size:22px;
+margin:30px 0 15px;
+padding-bottom:8px;
+border-bottom:1px solid #333;
+}
+
+p,li{
+color:#aaa;
+font-size:15px;
+}
+
+ul{
+padding-left:20px;
+margin-bottom:20px;
+}
+
+.btn-action-container{
+text-align:center;
+margin-top:40px;
+}
+
+.btn-back{
+display:inline-block;
+background:#ffb400;
+color:black;
+padding:14px 40px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.btn-back:hover{
+background:#e09e00;
+transform:translateY(-2px);
 }
 
 @media(max-width:768px){
@@ -127,6 +212,15 @@ nav a{
 margin:0;
 padding:12px 0;
 }
+
+.terms-card{
+padding:25px;
+}
+
+h1{
+font-size:30px;
+}
+
 }
     </style>
 </head>
