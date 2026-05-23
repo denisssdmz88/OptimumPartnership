@@ -16,177 +16,174 @@
             --border-color: #333333;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+        *{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
+body{
+background:#111;
+color:white;
+line-height:1.6;
+padding-top:100px;
+}
 
-        /* Header / Navbar exact ca în imagine */
-        .site-header {
-            background-color: rgba(18, 18, 18, 0.95);
-            border-bottom: 1px solid var(--border-color);
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+padding:25px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:1000;
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(8px);
+border-bottom:1px solid rgba(255,255,255,.05);
+}
 
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
+.logo{
+font-size:24px;
+font-weight:bold;
+letter-spacing:.5px;
+}
 
-        .logo span {
-            color: var(--accent-color);
-        }
+.logo span{
+color:#ffb400;
+}
 
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
-            align-items: center;
-        }
+.logo a{
+color:white;
+text-decoration:none;
+}
 
-        .nav-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
+nav{
+display:flex;
+align-items:center;
+}
 
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
+nav a{
+text-decoration:none;
+color:white;
+margin-left:25px;
+transition:.3s;
+}
 
-        .btn-nav {
-            background-color: var(--accent-color);
-            color: #000000 !important;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600 !important;
-        }
+nav a:hover{
+color:#ffb400;
+}
 
-        /* Zona centrală de conținut */
-        .terms-container {
-            max-width: 900px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
+.cta-btn{
+padding:12px 24px;
+background:#ffb400;
+border-radius:30px;
+color:black;
+font-weight:bold;
+text-decoration:none;
+display:inline-block;
+border:none;
+cursor:pointer;
+transition:.3s;
+}
 
-        .terms-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
+.cta-btn:hover{
+background:#e09e00;
+transform:translateY(-2px);
+}
 
-        h1 {
-            font-size: 2.2rem;
-            color: var(--text-main);
-            margin-bottom: 10px;
-            font-weight: 700;
-            text-align: center;
-        }
+.terms-container{
+max-width:1000px;
+margin:60px auto;
+padding:0 25px;
+}
 
-        .meta-date {
-            color: var(--accent-color);
-            font-size: 0.9rem;
-            text-align: center;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.terms-card{
+background:#1c1c1c;
+border:1px solid #222;
+border-radius:20px;
+padding:50px;
+box-shadow:0 10px 30px rgba(0,0,0,.45);
+}
 
-        /* Caseta cu datele fiscale (stilată similar câmpurilor din booking) */
-        .company-box {
-            background-color: rgba(255, 183, 3, 0.05);
-            border: 1px dashed var(--accent-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 35px;
-        }
+h1{
+font-size:42px;
+margin-bottom:10px;
+text-align:center;
+}
 
-        .company-box p {
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
+.meta-date{
+text-align:center;
+color:#ffb400;
+margin-bottom:35px;
+font-size:14px;
+}
 
-        .company-box p:last-child {
-            margin-bottom: 0;
-        }
+.company-box{
+background:rgba(255,180,0,.05);
+border:1px dashed #ffb400;
+border-radius:12px;
+padding:20px;
+margin-bottom:35px;
+}
 
-        .company-box strong {
-            color: var(--accent-color);
-        }
+.company-box p{
+margin-bottom:10px;
+color:#ddd;
+}
 
-        /* Secțiunile de text legal */
-        h2 {
-            color: var(--accent-color);
-            font-size: 1.3rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-weight: 600;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-        }
+.company-box strong{
+color:#ffb400;
+}
 
-        p {
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            text-align: justify;
-            font-size: 0.95rem;
-        }
+h2{
+color:#ffb400;
+font-size:24px;
+margin:35px 0 15px;
+padding-bottom:8px;
+border-bottom:1px solid #333;
+}
 
-        ul {
-            margin-bottom: 20px;
-            padding-left: 20px;
-        }
+p{
+color:#bbb;
+margin-bottom:15px;
+text-align:justify;
+}
 
-        li {
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
+ul{
+padding-left:25px;
+margin-bottom:25px;
+}
 
-        /* Butonul de acțiune principal din josul paginii */
-        .btn-action-container {
-            text-align: center;
-            margin-top: 40px;
-        }
+li{
+color:#bbb;
+margin-bottom:10px;
+}
 
-        .btn-back {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: #000000;
-            padding: 14px 40px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: transform 0.2s ease, background-color 0.3s ease;
-        }
+.btn-action-container{
+margin-top:50px;
+text-align:center;
+}
 
-        .btn-back:hover {
-            transform: scale(1.02);
-            background-color: #e5a100;
-        }
+.btn-back{
+display:inline-block;
+padding:14px 40px;
+border-radius:30px;
+background:#ffb400;
+color:black;
+font-weight:bold;
+text-decoration:none;
+transition:.3s;
+}
 
-        /* Responsivitate pentru mobil */
-       .menu-toggle{
+.btn-back:hover{
+background:#e09e00;
+transform:translateY(-2px);
+}
+
+.menu-toggle{
 display:none;
 font-size:32px;
 cursor:pointer;
@@ -214,21 +211,25 @@ gap:15px;
 }
 
 nav.active{
-display:flex !important;
-flex-direction:column;
-position:absolute;
-top:90px;
-left:0;
-width:100%;
-background:#111;
-padding:25px;
-border-top:1px solid #222;
+display:flex!important;
 z-index:9999;
 }
 
 nav a{
 margin:0;
 padding:12px 0;
+}
+
+.terms-card{
+padding:25px;
+}
+
+h1{
+font-size:30px;
+}
+
+h2{
+font-size:20px;
 }
 
 }
